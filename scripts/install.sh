@@ -2,7 +2,7 @@
 
 set -x
 
-REPO_SCRIPTS_DIR=~/git/pbc-scripts/scripts
+REPO_SCRIPTS_DIR=$(git rev-parse --show-toplevel)/scripts
 SCRIPTS="backup-to-pbs.sh list-pbs-snapshots.sh pbs-environment.sh restore-pbs-backup.sh"
 
 for script in $SCRIPTS; do
