@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -x
+set -euo pipefail
 
 REPO_SCRIPTS_DIR=$(git rev-parse --show-toplevel)/scripts
 SCRIPTS="backup-to-pbs.sh list-pbs-snapshots.sh pbs-environment.sh restore-pbs-backup.sh"
@@ -37,5 +37,11 @@ mkdir -p ${INSTALL_DIR}
 cd ${INSTALL_DIR} || exit
 
 for script in $SCRIPTS; do
-  ln -s "$SCRIPTS_DIR/$script" "$script"
+  cp -l "$REPO_SCRIPTS_DIR/$script" "$INSTALL_DIR/$script" || {
+		echo "Error: Failed to create a hardlink for $script. Creating a symlink instead."
+		ln -s "$REPO_SCRIPTS_DIR/$script" "$INSTALL_DIR/$script" || {
+			echo "Error: Failed to create a copy for $script. Aborting installation."
+			exit 1
+		}
+	}
 done
