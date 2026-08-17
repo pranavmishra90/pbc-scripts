@@ -11,7 +11,8 @@ for script in $SCRIPTS; do
     exit 1
   else
     REPO_REMOTE_URL=$(git config --get remote.origin.url)
-    cat >> "$REPO_SCRIPTS_DIR/$script" <<EOF
+		set +eu
+    grep -q "Script Info" $script 2>/dev/null || cat >> "$REPO_SCRIPTS_DIR/$script" <<EOF
 
 # --- Script Info ---
 # This script was installed from the pbc-scripts repository.
@@ -22,6 +23,8 @@ for script in $SCRIPTS; do
 EOF
   fi
 done
+
+set -eu
 
 read -r -p "Enter the installation directory (default: ~/.local/bin): " INSTALL_DIR
 INSTALL_DIR=${INSTALL_DIR:-~/.local/bin}
