@@ -40,6 +40,11 @@ mkdir -p ${INSTALL_DIR}
 cd ${INSTALL_DIR} || exit
 
 for script in $SCRIPTS; do
+
+	if [ -f "$INSTALL_DIR/$script" ]; then
+		rm "$INSTALL_DIR/$script"
+	fi
+
   cp -l "$REPO_SCRIPTS_DIR/$script" "$INSTALL_DIR/$script" || {
 		echo "Error: Failed to create a hardlink for $script. Creating a symlink instead."
 		ln -s "$REPO_SCRIPTS_DIR/$script" "$INSTALL_DIR/$script" || {
@@ -48,3 +53,6 @@ for script in $SCRIPTS; do
 		}
 	}
 done
+
+echo "Installation complete."
+exit 0
