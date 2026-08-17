@@ -5,9 +5,9 @@ My convenience scripts for using [Proxmox Backup Client](https://pbs.proxmox.com
 ## Installation
 
 * Clone this repository.
-* For convenience, symlink the backup scripts in the `scripts` directory to wherever you want.
-  * The included `install.sh` is a crude script will symlink the backup scripts into your `~/bin` directory.
-  * It assumes this repository is cloned at `~/git/pbc-scripts`.
+* For convenience, copy the backup scripts in the `scripts` directory to wherever you want.
+  * The included `install.sh` is a crude script will hardlink/symlink the backup scripts into a directory of your choice (default `~/.local/bin`).
+  * It may be convenient to use a directory which is on your `$PATH`
 * Update your `.bashrc`, `.zshrc`, or other login script to ensure the follow environment variables are set for this system:
   * `PBS_BACKUP_NAME`
   * `PBS_BACKUP_DIRS` (or `PBS_BACKUP_DIR` - same thing)
